@@ -74,14 +74,13 @@ const demoBookings: Booking[] = [
   },
 ];
 
-const today = new Date(2026, 7, 12);
 
 function bookingId(date: string, cart: Cart, period: number) {
   return `${date}_${cart === "Cart #1" ? "cart-1" : "cart-2"}_${period}`;
 }
 
 export default function Home() {
-  const [weekStart, setWeekStart] = useState(() => getMonday(today));
+  const [weekStart, setWeekStart] = useState(() => getMonday(new Date()));
   const [user, setUser] = useState<User | null>(null);
   const [authLoading, setAuthLoading] = useState(firebaseReady);
   const [authError, setAuthError] = useState("");
@@ -213,7 +212,7 @@ export default function Home() {
               </label>
             )}
             <button className="nav-button" onClick={() => setWeekStart(addDays(weekStart, -7))} aria-label="Previous week">‹</button>
-            <button className="today-button" onClick={() => setWeekStart(getMonday(today))}>This week</button>
+            <button className="today-button" onClick={() => setWeekStart(getMonday(new Date()))}>This week</button>
             <button className="nav-button" onClick={() => setWeekStart(addDays(weekStart, 7))} aria-label="Next week">›</button>
             <button className="reserve-button" onClick={() => {
               setSelectedSlot({ date: toISODate(weekDates[0]), period: 1, cart: "Cart #1" });
